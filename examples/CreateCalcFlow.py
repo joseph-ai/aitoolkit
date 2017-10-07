@@ -16,8 +16,11 @@ if __name__ == "__main__":
 
     x = FloatRv.create(3.0)
     y = FloatRv.create(4.0)
+    z = FloatRv.create(5.0)
+    a = FloatRv.create(7.0)
+    b = FloatRv.create(8.0)
 
-    v = test_add(x, y)
+    z3 = ((x+y) + (x+z) + (y+a)) * b
 
     #print(v)
 

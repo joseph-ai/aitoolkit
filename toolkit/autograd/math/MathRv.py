@@ -25,6 +25,10 @@ class MultiplyRv(MathRv):
 
         return self.value
 
+    def __str__(self):
+
+        return "%s * %s=%s" % (self.x, self.y, self.value)
+
 
 class AdditionRv(MathRv):
 

@@ -11,26 +11,35 @@ class CalcFlow(object):
 
         self.last_node = None
 
-    def _add_edge_binary(self, other, func):
+    def _add_edge_to_both(self, other, func):
 
-        self._add_edge_unary(func)
+        self.add_edge(func)
 
         other.add_edge(func)
 
-    def _add_edge_unary(self, func):
+    def _add_edge_to_self(self, func):
 
         if self.last_node is None:
             self.last_node = self
 
         self.network.add_edge(self.last_node, func, val=str(self.value))
 
-        self.last_node = func
-
     def add_edge(self, func):
 
-        self._add_edge_unary(func)
+        self._add_edge_to_self(func)
 
     def _compose(self, other):
+        network = nx.compose(self.network, other.network)
+        return network
 
-        return nx.compose(self.network, other.network)
+    def draw(self):
 
+        import networkx as nx
+        n = self.network
+        pos = nx.spring_layout(n)
+        nx.draw_networkx(n, pos)
+        nx.draw_networkx_edge_labels(n, pos)
+
+    def to_graphml(self):
+
+        nx.write_graphml(self.network, "%s.xml" % str(self.value))

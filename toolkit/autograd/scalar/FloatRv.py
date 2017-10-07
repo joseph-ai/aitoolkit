@@ -1,4 +1,5 @@
 import toolkit.autograd.math as am
+import networkx as nx
 
 from ..CalcFlow import CalcFlow
 
@@ -14,11 +15,9 @@ class FloatRv(CalcFlow):
         if not isinstance(other, CalcFlow):
             raise ValueError("Pass value that is not of derived type CalcFlow")
 
-        calc_val = self.value * other.value
+        math_func = am.MultiplyRv(self.value, other.value)
 
-        self._add_edge_binary(other, calc_val)
-
-        return FloatRv(calc_val)
+        return self._calc_binary(other, math_func)
 
     def __add__(self, other):
 
@@ -33,9 +32,11 @@ class FloatRv(CalcFlow):
 
         calc_val = FloatRv(func.calculate())
 
-        self._add_edge_binary(other, func)
+        self._add_edge_to_both(other, func)
 
         calc_val.network = self._compose(other)
+
+        calc_val.last_node = func
 
         return calc_val
 
@@ -43,7 +44,9 @@ class FloatRv(CalcFlow):
 
         calc_val = func.calculate()
 
-        self._add_edge_unary(func)
+        self._add_edge_to_self(func)
+
+        self.last_node = func
 
         return calc_val
 
@@ -55,14 +58,6 @@ class FloatRv(CalcFlow):
         math_func = am.IdentityRv(v)
 
         return v._calc_unary(math_func)
-
-    def draw(self):
-
-        import networkx as nx
-        n = self.network
-        pos = nx.spring_layout(n)
-        nx.draw_networkx(n, pos)
-        nx.draw_networkx_edge_labels(n, pos)
 
     def __str__(self):
 
