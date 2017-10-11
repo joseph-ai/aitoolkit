@@ -32,14 +32,27 @@ class CalcFlow(object):
         network = nx.compose(self.network, other.network)
         return network
 
+    def topological_sort(self, reverse=False, predicate=None):
+
+        data = nx.topological_sort(self.network, reverse=reverse)
+
+        if predicate is None:
+            return data
+
+        return [x for x in data if predicate(x)]
+
+
+    @classmethod
+    def isCalcFlow(cls, obj):
+        return isinstance(obj, CalcFlow)
+
     def draw(self):
 
-        import networkx as nx
         n = self.network
         pos = nx.spring_layout(n)
         nx.draw_networkx(n, pos)
         nx.draw_networkx_edge_labels(n, pos)
 
-    def to_graphml(self):
+    def to_graphml(self, file_path="data.xml"):
 
-        nx.write_graphml(self.network, "%s.xml" % str(self.value))
+        nx.write_graphml(self.network, file_path)

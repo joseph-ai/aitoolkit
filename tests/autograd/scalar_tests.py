@@ -1,4 +1,4 @@
-import toolkit.autograd.scalar.FloatFw as ff
+import toolkit.autodiff.scalar.FloatFw as ff
 
 
 def func1(x, y, z):
