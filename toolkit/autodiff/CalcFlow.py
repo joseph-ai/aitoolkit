@@ -32,14 +32,19 @@ class CalcFlow(object):
         network = nx.compose(self.network, other.network)
         return network
 
-    def topological_sort(self, reverse=False, predicate=None):
+    def topological_sort(self, reverse=False, predicate=None, func=None):
 
         data = nx.topological_sort(self.network, reverse=reverse)
 
-        if predicate is None:
-            return data
+        pdata = data
+        if predicate is not None:
+            pdata = [x for x in data if predicate(x)]
 
-        return [x for x in data if predicate(x)]
+        pfdata = pdata
+        if func is not None:
+            pfdata = [func(x) for x in pdata]
+
+        return pfdata
 
 
     @classmethod

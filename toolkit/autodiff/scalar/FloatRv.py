@@ -62,7 +62,7 @@ class FloatRv(CalcFlow):
 
         return self._calc_binary(other, math_func)
 
-    def __add__(self, other):
+    def __sub__(self, other):
 
         if not CalcFlow.isCalcFlow(other):
             raise ValueError("Not CalcFlow")
