@@ -19,6 +19,8 @@ class FloatRv(CalcFlow):
 
         calc_val.last_node = func
 
+        func.result = calc_val
+
         func.network = calc_val.network
 
         return calc_val
@@ -29,9 +31,11 @@ class FloatRv(CalcFlow):
 
         self._add_edge_to_self(func)
 
-        self.last_node = func
+        calc_val.last_node = func
 
-        func.network = self.network
+        func.result = calc_val
+
+        func.network = calc_val.network
 
         return calc_val
 
