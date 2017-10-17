@@ -22,15 +22,16 @@ class CalcFlow(object):
         if self.last_node is None:
             self.last_node = self
 
-        self.network.add_edge(self.last_node, func, val=self.value)
-
+        self.network.add_edge(self.last_node, func, val=str(self))
 
     def add_edge(self, func):
 
         self._add_edge_to_self(func)
 
     def _compose(self, other):
+
         network = nx.compose(self.network, other.network)
+
         return network
 
     def topological_sort(self, reverse=False, predicate=None, func=None):
@@ -55,19 +56,16 @@ class CalcFlow(object):
                 if network.out_degree(x) == 0
                 and network.in_degree(x) != 0]
 
-    def all_neighbors(self, leaves=None):
+    def in_edges(self, leaves=None, data=False):
 
         network = self.network
 
         if leaves is None:
             leaves = self.leaves()
 
-        neighbors = []
+        in_edges = [x for x in network.in_edges(leaves, data)]
 
-        for leaf in leaves:
-            neighbors = [x for x in nx.all_neighbors(network, leaf)]
-
-        return neighbors
+        return in_edges
 
     @classmethod
     def isCalcFlow(cls, obj):
