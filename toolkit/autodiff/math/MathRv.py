@@ -5,12 +5,13 @@ class MathRv (object):
 
     def __init__(self):
         self.result = None
+        self.backwards_result = None
         self.network = None
 
     def calculate(self):
         pass
 
-    def backwards(self, value):
+    def backwards(self, value=None, seed=None):
         pass
 
 
@@ -28,11 +29,27 @@ class MultiplyRv(MathRv):
 
         return self.result
 
-    def backwards(self, value):
+    def backwards(self, value=None, seed=None):
+
+        if seed is not None:
+            self.backwards_result = seed
+            return self.backwards_result
 
         # multiply the previous partial derivative
         # the partial derivative with respect to either input x or y
-        return value * 1
+
+        backwards_result = self.backwards_result
+
+        if backwards_result is None:
+            backwards_result = value * 1
+            self.backwards_result = backwards_result
+            return backwards_result
+
+        backwards_result = backwards_result + value * 1
+
+        self.backwards_result = backwards_result
+
+        return backwards_result
 
     def __str__(self):
 
@@ -128,7 +145,7 @@ class SinRv(MathRv):
 
         return self.result
 
-    def backwards(self, value):
+    def backwards(self, value=None, seed=None):
 
         return math.cos(value)
 
@@ -150,7 +167,7 @@ class ExpRv(MathRv):
 
         return self.result
 
-    def backwards(self, value):
+    def backwards(self, value=None, seed=None):
 
         return math.exp(value)
 
@@ -172,7 +189,7 @@ class LnRv(MathRv):
 
         return self.result
 
-    def backwards(self, value):
+    def backwards(self, value=None, seed=None):
 
         return value * 1/value
 
@@ -193,7 +210,7 @@ class IdentityRv(MathRv):
         self.result = self.input_x
         return self.input_x.value
 
-    def backwards(self, value):
+    def backwards(self, value=None, seed=None):
         return 0
 
     def __str__(self):
