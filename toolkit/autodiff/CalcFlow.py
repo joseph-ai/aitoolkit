@@ -7,6 +7,8 @@ class CalcFlow(object):
 
         self.value = value
 
+        self.partial_value = None
+
         self.network = nx.DiGraph()
 
         self.last_node = None

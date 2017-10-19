@@ -14,6 +14,8 @@ def test_add(x, y):
 
 def backwards(result):
 
+    result.partial_value = 1
+
     toposort = result.topological_sort(reverse=True)
 
     network = result.network
@@ -24,15 +26,18 @@ def backwards(result):
 
         if len(out_edges) == 0:
             print("Leaf Node => %s" % item)
-            item.backwards(seed=1.0)
             continue
 
         for edges in out_edges:
             for node in edges:
                 if item != node:
-                    partial = node.backwards_result
-                    item.backwards(value=partial)
-                    print("%s -> %s" % (str(item), node))
+                    print("Item:%s\nNode:%s" % (str(item), node))
+                    edge_val = node.result
+                    partial = item.backwards(edge_val)
+                    print("Edge:%s\nPartial:%s" % (edge_val, partial))
+                    print("--")
+
+    return result
 
 
 if __name__ == "__main__":
@@ -46,7 +51,7 @@ if __name__ == "__main__":
 
     z3 = (((x+y) + (x+z) + (y+a)) * (b ** c)) * x
 
-    backwards(z3)
+    updated_weights = backwards(z3)
 
 
 

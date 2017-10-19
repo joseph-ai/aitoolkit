@@ -5,13 +5,12 @@ class MathRv (object):
 
     def __init__(self):
         self.result = None
-        self.backwards_result = None
         self.network = None
 
     def calculate(self):
         pass
 
-    def backwards(self, value=None, seed=None):
+    def backwards(self, edge_value):
         pass
 
 
@@ -29,31 +28,44 @@ class MultiplyRv(MathRv):
 
         return self.result
 
-    def backwards(self, value=None, seed=None):
+    def backwards(self, edge_value):
 
-        if seed is not None:
-            self.backwards_result = seed
-            return self.backwards_result
-
-        # multiply the previous partial derivative
         # the partial derivative with respect to either input x or y
+        if edge_value == self.input_x.value:
+            return self.input_y
 
-        backwards_result = self.backwards_result
-
-        if backwards_result is None:
-            backwards_result = value * 1
-            self.backwards_result = backwards_result
-            return backwards_result
-
-        backwards_result = backwards_result + value * 1
-
-        self.backwards_result = backwards_result
-
-        return backwards_result
+        return self.input_x
 
     def __str__(self):
 
         return "%s * %s = %s" % (self.input_x, self.input_y, self.result)
+
+
+class AdditionRv(MathRv):
+
+    def __init__(self, x, y):
+        self.input_x = x
+        self.input_y = y
+
+        super().__init__()
+
+    def calculate(self):
+
+        self.result = self.input_x.value + self.input_y.value
+
+        return self.result
+
+    def backwards(self, edge_value):
+
+        # the partial derivative with respect to either input x or y
+        if edge_value == self.input_x.value:
+            return self.input_x
+
+        return self.input_y
+
+    def __str__(self):
+
+        return "%s + %s = %s" % (self.input_x, self.input_y, self.result)
 
 
 class ExponentRv(MathRv):
@@ -74,24 +86,6 @@ class ExponentRv(MathRv):
 
         return "%s ^ %s = %s" % (self.input_x, self.input_y, self.result)
 
-
-class AdditionRv(MathRv):
-
-    def __init__(self, x, y):
-        self.input_x = x
-        self.input_y = y
-
-        super().__init__()
-
-    def calculate(self):
-
-        self.result = self.input_x.value + self.input_y.value
-
-        return self.result
-
-    def __str__(self):
-
-        return "%s + %s = %s" % (self.input_x, self.input_y, self.result)
 
 
 class SubtractionRv(MathRv):
@@ -145,9 +139,9 @@ class SinRv(MathRv):
 
         return self.result
 
-    def backwards(self, value=None, seed=None):
+    def backwards(self, edge_value):
 
-        return math.cos(value)
+        return math.cos(edge_value)
 
     def __str__(self):
 
@@ -167,9 +161,9 @@ class ExpRv(MathRv):
 
         return self.result
 
-    def backwards(self, value=None, seed=None):
+    def backwards(self, edge_value):
 
-        return math.exp(value)
+        return math.exp(edge_value)
 
     def __str__(self):
 
@@ -189,12 +183,11 @@ class LnRv(MathRv):
 
         return self.result
 
-    def backwards(self, value=None, seed=None):
+    def backwards(self, edge_value):
 
-        return value * 1/value
+        return edge_value * 1/edge_value
 
     def __str__(self):
-
 
         return "ln(%s) = %s" % (self.input_x, self.result)
 
