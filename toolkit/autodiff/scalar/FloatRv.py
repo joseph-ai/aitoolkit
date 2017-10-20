@@ -107,7 +107,7 @@ class FloatRv(CalcFlow):
 
     def ln(self):
 
-        math_func = am.ln(self)
+        math_func = am.LnRv(self)
 
         return self._calc_unary(math_func)
 

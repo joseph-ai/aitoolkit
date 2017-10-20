@@ -32,15 +32,21 @@ def backwards(result):
             for node in edges:
                 if item != node:
                     print("Item:%s\nNode:%s" % (str(item), node))
-                    edge_val = node.result
-                    partial = item.backwards(edge_val)
+                    edge_val = item.result
+                    print(type(edge_val))
+                    partial = node.backwards(edge_val)
                     print("Edge:%s\nPartial:%s" % (edge_val, partial))
                     print("--")
 
     return result
 
 
-if __name__ == "__main__":
+def test_func(x1, x2):
+
+    return x1.ln() + x1 * x2 - x2.sin()
+
+
+def simple_test():
 
     x = FloatRv.create(3.0)
     y = FloatRv.create(4.0)
@@ -51,7 +57,16 @@ if __name__ == "__main__":
 
     z3 = (((x+y) + (x+z) + (y+a)) * (b ** c)) * x
 
-    updated_weights = backwards(z3)
+    return z3
+
+
+if __name__ == "__main__":
+
+    v1 = FloatRv.create(2.0)
+    v2 = FloatRv.create(5.0)
+    z4 = test_func(v1, v2)
+    zz = backwards(z4)
+
 
 
 
