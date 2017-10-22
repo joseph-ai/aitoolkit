@@ -11,6 +11,7 @@ class CalcFlow(object):
 
         self.network = nx.DiGraph()
 
+        self.identity = None
         self.last_node = None
 
     def _add_edge_to_both(self, other, func):
@@ -24,7 +25,18 @@ class CalcFlow(object):
         if self.last_node is None:
             self.last_node = self
 
+        print("\n--------")
+
+        print("last: %s" % self.last_node)
+        print("func: %s" % func)
+        print("self: %s" % self)
+
         self.network.add_edge(self.last_node, func, val=str(self))
+
+        if self.identity is not None:
+            print("id: %s" % self.identity)
+            self.network.add_edge(self.identity, func, val=str(self))
+
 
     def add_edge(self, func):
 

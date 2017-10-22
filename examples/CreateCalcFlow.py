@@ -33,7 +33,7 @@ def backwards(result):
                 if item != node:
                     print("Item:%s\nNode:%s" % (str(item), node))
                     edge_val = item.result
-                    print(type(edge_val))
+                    print("%s:%s" % (type(edge_val), edge_val))
                     partial = node.backwards(edge_val)
                     print("Edge:%s\nPartial:%s" % (edge_val, partial))
                     print("--")
@@ -43,7 +43,7 @@ def backwards(result):
 
 def test_func(x1, x2):
 
-    return x1.ln() + x1 * x2 - x2.sin()
+    return (x1.ln() + (x1 * x2)) - x2.sin()
 
 
 def simple_test():

@@ -218,7 +218,6 @@ class IdentityRv(MathRv):
         super().__init__()
 
     def calculate(self):
-        self.result = self.input_x
         return self.input_x.value
 
     def backwards(self, edge_value):

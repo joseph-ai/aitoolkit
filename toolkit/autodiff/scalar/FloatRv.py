@@ -28,15 +28,11 @@ class FloatRv(CalcFlow):
     def _calc_unary(self, func):
 
         calc_val = FloatRv(func.calculate())
-
         self._add_edge_to_self(func)
-
         calc_val.last_node = func
-
+        calc_val.network = self.network
         func.result = calc_val
-
         func.network = calc_val.network
-
         return calc_val
 
     @classmethod
@@ -46,7 +42,13 @@ class FloatRv(CalcFlow):
 
         math_func = am.IdentityRv(v)
 
-        return v._calc_unary(math_func)
+        calc_val = v._calc_unary(math_func)
+
+        calc_val.identity = math_func
+
+        print("create_identity: %s" % calc_val.identity)
+
+        return calc_val
 
     def __mul__(self, other):
 
