@@ -1,5 +1,5 @@
 from toolkit.autodiff.scalar.FloatRv import FloatRv
-from toolkit.autodiff.math import MathRv
+from toolkit.autodiff.math import MathRv, IdentityRv
 
 
 def test(x, y):
@@ -14,36 +14,45 @@ def test_add(x, y):
 
 def backwards(result):
 
-    result.partial_value = 1
-
-    toposort = result.topological_sort(reverse=True)
+    toposort = result.topological_sort(reverse=True, predicate=lambda x: isinstance(x, MathRv))
 
     network = result.network
 
-    for item in toposort:
+    identities = []
+    for math_node in toposort:
 
-        out_edges = network.out_edges(item)
+        edges_proceeding_node = network.out_edges(math_node)
 
-        if len(out_edges) == 0:
-            print("Leaf Node => %s" % item)
+        # this is a leaf node and we set the seed to 1
+        if len(edges_proceeding_node) == 0:
+            math_node.result.partial_value = 1
             continue
 
-        for edges in out_edges:
-            for node in edges:
-                if item != node:
-                    print("Item:%s\nNode:%s" % (str(item), node))
-                    edge_val = item.result
-                    print("%s:%s" % (type(edge_val), edge_val))
-                    partial = node.backwards(edge_val)
-                    print("Edge:%s\nPartial:%s" % (edge_val, partial))
-                    print("--")
+        if isinstance(math_node, IdentityRv):
+            identities.append(math_node)
 
-    return result
+        # update partials until you get to the root nodes
+        for current_edge in edges_proceeding_node:
 
+            for proceeding_node in current_edge:
 
-def test_func(x1, x2):
+                if math_node == proceeding_node:
+                    continue
 
-    return (x1.ln() + (x1 * x2)) - x2.sin()
+                edge_val = math_node.result
+
+                proceeding_node_partial_wrt_edge_val = proceeding_node.backwards(edge_val)
+
+                proceeding_node_partial_val = proceeding_node.result.partial_value
+
+                math_node_partial_val = math_node.result.partial_value
+
+                math_node_partial_val = math_node_partial_val \
+                    + (proceeding_node_partial_val * proceeding_node_partial_wrt_edge_val)
+
+                math_node.result.partial_value = math_node_partial_val
+
+    return {node: node.result.partial_value for node in identities}
 
 
 def simple_test():
@@ -58,6 +67,11 @@ def simple_test():
     z3 = (((x+y) + (x+z) + (y+a)) * (b ** c)) * x
 
     return z3
+
+
+def test_func(x1, x2):
+
+    return (x1.ln() + (x1 * x2)) - x2.sin()
 
 
 if __name__ == "__main__":

@@ -46,8 +46,6 @@ class FloatRv(CalcFlow):
 
         calc_val.identity = math_func
 
-        print("create_identity: %s" % calc_val.identity)
-
         return calc_val
 
     def __mul__(self, other):

@@ -31,10 +31,10 @@ class MultiplyRv(MathRv):
     def backwards(self, edge_value):
 
         # the partial derivative with respect to either input x or y
-        if edge_value == self.input_x.value:
-            return self.input_y
+        if edge_value.value == self.input_x.value:
+            return self.input_y.value
 
-        return self.input_x
+        return self.input_x.value
 
     def __str__(self):
 
@@ -131,7 +131,7 @@ class ExponentRv(MathRv):
 
         return self.result
 
-    def calculate(self):
+    def backwards(self, edge_value):
 
         coeff = self.input_y
         expon = coeff - 1
@@ -159,7 +159,7 @@ class SinRv(MathRv):
 
     def backwards(self, edge_value):
 
-        return math.cos(edge_value)
+        return math.cos(edge_value.value)
 
     def __str__(self):
 
