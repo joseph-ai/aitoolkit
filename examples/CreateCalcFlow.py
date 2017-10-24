@@ -52,7 +52,7 @@ def backwards(result):
 
                 math_node.result.partial_value = math_node_partial_val
 
-    return {node: node.result.partial_value for node in identities}
+    return {node.result: node.result.partial_value for node in identities}
 
 
 def simple_test():
