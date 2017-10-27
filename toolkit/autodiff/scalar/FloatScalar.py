@@ -3,7 +3,7 @@ import toolkit.autodiff.math as am
 from ..CalcFlow import CalcFlow
 
 
-class FloatRv(CalcFlow):
+class FloatScalar(CalcFlow):
 
     def __init__(self, value):
 
@@ -11,7 +11,7 @@ class FloatRv(CalcFlow):
 
     def _calc_binary(self, other, func):
 
-        calc_val = FloatRv(func.calculate())
+        calc_val = FloatScalar(func.calculate())
 
         self._add_edge_to_both(other, func)
 
@@ -27,7 +27,7 @@ class FloatRv(CalcFlow):
 
     def _calc_unary(self, func):
 
-        calc_val = FloatRv(func.calculate())
+        calc_val = FloatScalar(func.calculate())
         self._add_edge_to_self(func)
         calc_val.last_node = func
         calc_val.network = self.network
@@ -38,7 +38,7 @@ class FloatRv(CalcFlow):
     @classmethod
     def create(cls, value):
 
-        v = FloatRv(value)
+        v = FloatScalar(value)
 
         math_func = am.IdentityRv(v)
 
@@ -50,7 +50,7 @@ class FloatRv(CalcFlow):
 
     def __mul__(self, other):
 
-        if not CalcFlow.isCalcFlow(other):
+        if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
         math_func = am.MultiplyRv(self, other)
@@ -59,7 +59,7 @@ class FloatRv(CalcFlow):
 
     def __add__(self, other):
 
-        if not CalcFlow.isCalcFlow(other):
+        if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
         math_func = am.AdditionRv(self, other)
@@ -68,7 +68,7 @@ class FloatRv(CalcFlow):
 
     def __sub__(self, other):
 
-        if not CalcFlow.isCalcFlow(other):
+        if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
         math_func = am.SubtractionRv(self, other)
@@ -77,7 +77,7 @@ class FloatRv(CalcFlow):
 
     def __pow__(self, other):
 
-        if not CalcFlow.isCalcFlow(other):
+        if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
         math_func = am.ExponentRv(self, other)
@@ -86,7 +86,7 @@ class FloatRv(CalcFlow):
 
     def __div__(self, other):
 
-        if not CalcFlow.isCalcFlow(other):
+        if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
         math_func = am.DivideRv(self, other)

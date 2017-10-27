@@ -8,5 +8,6 @@ __all__ = ["MultiplyRv",
            "SubtractionRv",
            "SinRv",
            "LnRv",
-           "ExpRv"
+           "ExpRv",
+           "MathRv"
            ]

@@ -1,5 +1,7 @@
 import networkx as nx
 
+from .math import MathRv, IdentityRv
+
 
 class CalcFlow(object):
 
@@ -7,11 +9,12 @@ class CalcFlow(object):
 
         self.value = value
 
-        self.partial_value = 0
+        self.gradient = 0
 
         self.network = nx.DiGraph()
 
         self.identity = None
+
         self.last_node = None
 
     def _add_edge_to_both(self, other, func):
@@ -73,9 +76,47 @@ class CalcFlow(object):
 
         return in_edges
 
-    @classmethod
-    def isCalcFlow(cls, obj):
-        return isinstance(obj, CalcFlow)
+    def backwards(self):
+
+        topological_sort = self.topological_sort(reverse=True, predicate=lambda x: isinstance(x, MathRv))
+
+        network = self.network
+
+        identities = []
+        for math_node in topological_sort:
+
+            edges_proceeding_node = network.out_edges(math_node)
+
+            # this is a leaf node and we set the seed to 1
+            if len(edges_proceeding_node) == 0:
+                math_node.result.gradient = 1
+                continue
+
+            if isinstance(math_node, IdentityRv):
+                identities.append(math_node)
+
+            # update partials until you get to the root nodes
+            for current_edge in edges_proceeding_node:
+
+                for proceeding_node in current_edge:
+
+                    if math_node == proceeding_node:
+                        continue
+
+                    edge_val = math_node.result
+
+                    proceeding_node_partial_wrt_edge_val = proceeding_node.backwards(edge_val)
+
+                    proceeding_node_partial_val = proceeding_node.result.gradient
+
+                    math_node_partial_val = math_node.result.gradient
+
+                    math_node_partial_val = math_node_partial_val \
+                        + (proceeding_node_partial_val * proceeding_node_partial_wrt_edge_val)
+
+                    math_node.result.gradient = math_node_partial_val
+
+        return {node.result: node.result.gradient for node in identities}
 
     def draw(self):
 
@@ -87,3 +128,9 @@ class CalcFlow(object):
     def to_graphml(self, file_path="data.xml"):
 
         nx.write_graphml(self.network, file_path)
+
+    @classmethod
+    def is_calc_flow(cls, obj):
+        return isinstance(obj, CalcFlow)
+
+
