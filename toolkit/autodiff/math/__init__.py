@@ -1,13 +1,13 @@
-from .MathRv import *
+from .MathOp import *
 
-__all__ = ["MultiplyRv",
-           "AdditionRv",
-           "IdentityRv",
-           "ExponentRv",
-           "DivideRv",
-           "SubtractionRv",
-           "SinRv",
-           "LnRv",
-           "ExpRv",
-           "MathRv"
+__all__ = ["MultiplyOp",
+           "AdditionOp",
+           "IdentityOp",
+           "ExponentOp",
+           "DivideOp",
+           "SubtractionOp",
+           "SinOp",
+           "LnOp",
+           "ExpOp",
+           "MathOp"
            ]

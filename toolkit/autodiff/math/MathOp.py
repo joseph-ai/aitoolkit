@@ -1,7 +1,7 @@
 import math
 
 
-class MathRv (object):
+class MathOp (object):
 
     def __init__(self):
         self.result = None
@@ -10,11 +10,11 @@ class MathRv (object):
     def calculate(self):
         pass
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
         pass
 
 
-class MultiplyRv(MathRv):
+class MultiplyOp(MathOp):
 
     def __init__(self, x, y):
         self.input_x = x
@@ -28,7 +28,7 @@ class MultiplyRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         # the partial derivative with respect to either input x or y
         if edge_value.value == self.input_x.value:
@@ -41,7 +41,7 @@ class MultiplyRv(MathRv):
         return "%s * %s = %s" % (self.input_x, self.input_y, self.result)
 
 
-class AdditionRv(MathRv):
+class AdditionOp(MathOp):
 
     def __init__(self, x, y):
         self.input_x = x
@@ -55,7 +55,7 @@ class AdditionRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         # the partial derivative with respect to either input x or y is 1
         return 1
@@ -65,7 +65,7 @@ class AdditionRv(MathRv):
         return "%s + %s = %s" % (self.input_x, self.input_y, self.result)
 
 
-class DivideRv(MathRv):
+class DivideOp(MathOp):
 
     def __init__(self, x, y):
         self.input_x = x
@@ -79,7 +79,7 @@ class DivideRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         if edge_value == self.input_x:
             return 1 / self.input_y
@@ -91,7 +91,7 @@ class DivideRv(MathRv):
         return "%s / %s = %s" % (self.input_x, self.input_y, self.result)
 
 
-class SubtractionRv(MathRv):
+class SubtractionOp(MathOp):
 
     def __init__(self, x, y):
         self.input_x = x
@@ -105,7 +105,7 @@ class SubtractionRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         if edge_value == self.input_x:
             return 1
@@ -117,7 +117,7 @@ class SubtractionRv(MathRv):
         return "%s - %s = %s" % (self.input_x, self.input_y, self.result)
 
 
-class ExponentRv(MathRv):
+class ExponentOp(MathOp):
 
     def __init__(self, x, y):
         self.input_x = x
@@ -131,7 +131,7 @@ class ExponentRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         coeff = self.input_y
         expon = coeff - 1
@@ -144,7 +144,7 @@ class ExponentRv(MathRv):
         return "%s ^ %s = %s" % (self.input_x, self.input_y, self.result)
 
 
-class SinRv(MathRv):
+class SinOp(MathOp):
 
     def __init__(self, x):
         self.input_x = x
@@ -157,7 +157,7 @@ class SinRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         return math.cos(edge_value.value)
 
@@ -166,7 +166,7 @@ class SinRv(MathRv):
         return "sin(%s) = %s" % (self.input_x, self.result)
 
 
-class ExpRv(MathRv):
+class ExpOp(MathOp):
 
     def __init__(self, x):
         self.input_x = x
@@ -179,7 +179,7 @@ class ExpRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         return math.exp(edge_value)
 
@@ -188,7 +188,7 @@ class ExpRv(MathRv):
         return "e ** (%s) = %s" % (self.input_x, self.result)
 
 
-class LnRv(MathRv):
+class LnOp(MathOp):
 
     def __init__(self, x):
         self.input_x = x
@@ -201,7 +201,7 @@ class LnRv(MathRv):
 
         return self.result
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
 
         return 1 / edge_value.value
 
@@ -210,7 +210,7 @@ class LnRv(MathRv):
         return "ln(%s) = %s" % (self.input_x, self.result)
 
 
-class IdentityRv(MathRv):
+class IdentityOp(MathOp):
 
     def __init__(self, x):
         self.input_x = x
@@ -220,7 +220,7 @@ class IdentityRv(MathRv):
     def calculate(self):
         return self.input_x.value
 
-    def backwards(self, edge_value):
+    def backward(self, edge_value):
         return 0
 
     def __str__(self):

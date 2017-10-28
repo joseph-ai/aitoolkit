@@ -40,7 +40,7 @@ class FloatScalar(CalcFlow):
 
         v = FloatScalar(value)
 
-        math_func = am.IdentityRv(v)
+        math_func = am.IdentityOp(v)
 
         calc_val = v._calc_unary(math_func)
 
@@ -53,7 +53,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.MultiplyRv(self, other)
+        math_func = am.MultiplyOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -62,7 +62,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.AdditionRv(self, other)
+        math_func = am.AdditionOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -71,7 +71,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.SubtractionRv(self, other)
+        math_func = am.SubtractionOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -80,7 +80,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.ExponentRv(self, other)
+        math_func = am.ExponentOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -89,25 +89,25 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.DivideRv(self, other)
+        math_func = am.DivideOp(self, other)
 
         return self._calc_binary(other, math_func)
 
     def sin(self):
 
-        math_func = am.SinRv(self)
+        math_func = am.SinOp(self)
 
         return self._calc_unary(math_func)
 
     def exp(self):
 
-        math_func = am.ExpRv(self)
+        math_func = am.ExpOp(self)
 
         return self._calc_unary(math_func)
 
     def ln(self):
 
-        math_func = am.LnRv(self)
+        math_func = am.LnOp(self)
 
         return self._calc_unary(math_func)
 

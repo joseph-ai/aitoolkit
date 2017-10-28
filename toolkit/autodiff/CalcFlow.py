@@ -1,6 +1,6 @@
 import networkx as nx
 
-from .math import MathRv, IdentityRv
+from .math import MathOp, IdentityOp
 
 
 class CalcFlow(object):
@@ -78,7 +78,7 @@ class CalcFlow(object):
 
     def backwards(self):
 
-        topological_sort = self.topological_sort(reverse=True, predicate=lambda x: isinstance(x, MathRv))
+        topological_sort = self.topological_sort(reverse=True, predicate=lambda x: isinstance(x, MathOp))
 
         network = self.network
 
@@ -92,7 +92,7 @@ class CalcFlow(object):
                 math_node.result.gradient = 1
                 continue
 
-            if isinstance(math_node, IdentityRv):
+            if isinstance(math_node, IdentityOp):
                 identities.append(math_node)
 
             # update partials until you get to the root nodes
@@ -105,7 +105,7 @@ class CalcFlow(object):
 
                     edge_val = math_node.result
 
-                    proceeding_node_partial_wrt_edge_val = proceeding_node.backwards(edge_val)
+                    proceeding_node_partial_wrt_edge_val = proceeding_node.backward(edge_val)
 
                     proceeding_node_partial_val = proceeding_node.result.gradient
 
