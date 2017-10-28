@@ -12,7 +12,7 @@ if __name__ == "__main__":
     v2 = FloatScalar.create(5.0)
     v3 = test_func(v1, v2)
     ans = v3.backward()
-    print("\nForward: %s\nv1.gradient: %s\nv2.gradient: %s" % (ans, v1.gradient, v2.gradient))
+    print("\nv1.gradient: %s\nv2.gradient: %s" % (v1.gradient, v2.gradient))
 
 
 

@@ -5,7 +5,7 @@ class MathOp (object):
 
     def __init__(self):
         self.result = None
-        self.network = None
+        self.flow = None
 
     def calculate(self):
         pass

@@ -15,13 +15,13 @@ class FloatScalar(CalcFlow):
 
         self._add_edge_to_both(other, func)
 
-        calc_val.network = self._compose(other)
+        calc_val.flow = self._compose(other)
 
         calc_val.last_node = func
 
         func.result = calc_val
 
-        func.network = calc_val.network
+        func.flow = calc_val.flow
 
         return calc_val
 
@@ -30,9 +30,9 @@ class FloatScalar(CalcFlow):
         calc_val = FloatScalar(func.calculate())
         self._add_edge_to_self(func)
         calc_val.last_node = func
-        calc_val.network = self.network
+        calc_val.flow = self.flow
         func.result = calc_val
-        func.network = calc_val.network
+        func.flow = calc_val.flow
         return calc_val
 
     @classmethod
