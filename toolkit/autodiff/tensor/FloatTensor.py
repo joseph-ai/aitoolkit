@@ -1,4 +1,5 @@
 import toolkit.autodiff.math.tensor as am
+import toolkit.autodiff.math as m
 
 from ..math import IdentityOp
 from ..CalcFlow import CalcFlow
@@ -38,3 +39,74 @@ class FloatTensor(CalcFlow):
         calc_val.identity = math_func
 
         return calc_val
+
+    def __mul__(self, other):
+
+        if not CalcFlow.is_calc_flow(other):
+            raise ValueError("Not CalcFlow")
+
+        math_func = m.MultiplyOp(self, other)
+
+        return self._calc_binary(other, math_func)
+
+    def __add__(self, other):
+
+        if not CalcFlow.is_calc_flow(other):
+            raise ValueError("Not CalcFlow")
+
+        math_func = m.AdditionOp(self, other)
+
+        return self._calc_binary(other, math_func)
+
+    def __sub__(self, other):
+
+        if not CalcFlow.is_calc_flow(other):
+            raise ValueError("Not CalcFlow")
+
+        math_func = m.SubtractionOp(self, other)
+
+        return self._calc_binary(other, math_func)
+
+    def __pow__(self, other):
+
+        if not CalcFlow.is_calc_flow(other):
+            raise ValueError("Not CalcFlow")
+
+        math_func = m.ExponentOp(self, other)
+
+        return self._calc_binary(other, math_func)
+
+    def __div__(self, other):
+
+        if not CalcFlow.is_calc_flow(other):
+            raise ValueError("Not CalcFlow")
+
+        math_func = m.DivideOp(self, other)
+
+        return self._calc_binary(other, math_func)
+
+    def sin(self):
+
+        math_func = am.SinOp(self)
+
+        return self._calc_unary(math_func)
+
+    def exp(self):
+
+        math_func = am.ExpOp(self)
+
+        return self._calc_unary(math_func)
+
+    def ln(self):
+
+        math_func = am.LnOp(self)
+
+        return self._calc_unary(math_func)
+
+    def __truediv__(self, other):
+
+        return self.__div__(other)
+
+    def __str__(self):
+
+        return "%s" % self.value
