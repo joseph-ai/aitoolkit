@@ -1,5 +1,7 @@
-import toolkit.autodiff.math as am
+import toolkit.autodiff.math.scalar as am
+import toolkit.autodiff.math as m
 
+from ..math import IdentityOp
 from ..CalcFlow import CalcFlow
 
 
@@ -30,7 +32,7 @@ class FloatScalar(CalcFlow):
 
         v = FloatScalar(value)
 
-        math_func = am.IdentityOp(v)
+        math_func = IdentityOp(v)
 
         calc_val = v._calc_unary(math_func)
 
@@ -43,7 +45,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.MultiplyOp(self, other)
+        math_func = m.MultiplyOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -52,7 +54,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.AdditionOp(self, other)
+        math_func = m.AdditionOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -61,7 +63,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.SubtractionOp(self, other)
+        math_func = m.SubtractionOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -70,7 +72,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.ExponentOp(self, other)
+        math_func = m.ExponentOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -79,7 +81,7 @@ class FloatScalar(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = am.DivideOp(self, other)
+        math_func = m.DivideOp(self, other)
 
         return self._calc_binary(other, math_func)
 

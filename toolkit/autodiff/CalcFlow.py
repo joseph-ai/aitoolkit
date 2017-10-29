@@ -1,5 +1,6 @@
+from toolkit.autodiff.math import MathOp, IdentityOp
+
 from .flow import FlowCreator
-from .math import MathOp, IdentityOp
 
 
 class CalcFlow(object):

@@ -1,3 +1,4 @@
+from .IdentityOp import IdentityOp
 from .MathOp import *
 
 __all__ = ["MultiplyOp",
@@ -6,8 +7,6 @@ __all__ = ["MultiplyOp",
            "ExponentOp",
            "DivideOp",
            "SubtractionOp",
-           "SinOp",
-           "LnOp",
-           "ExpOp",
-           "MathOp"
-           ]
+           "IdentityOp",
+           "MathOp",
+]
