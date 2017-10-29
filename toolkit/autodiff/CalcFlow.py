@@ -17,6 +17,34 @@ class CalcFlow(object):
         self.flow = FlowCreator.default_creator()
         self.flow.init()
 
+    def __calc_unary__(self, calc_val, func):
+
+        self._add_edge_to_self(func)
+
+        calc_val.last_node = func
+
+        calc_val.flow = self.flow
+
+        func.result = calc_val
+
+        func.flow = calc_val.flow
+
+        return calc_val
+
+    def __calc_binary__(self, calc_val, other, func):
+
+        self._add_edge_to_both(other, func)
+
+        calc_val.flow = self.__compose__(other)
+
+        calc_val.last_node = func
+
+        func.result = calc_val
+
+        func.flow = calc_val.flow
+
+        return calc_val
+
     def _add_edge_to_both(self, other, func):
 
         self.add_edge(func)
@@ -37,7 +65,7 @@ class CalcFlow(object):
 
         self._add_edge_to_self(func)
 
-    def _compose(self, other):
+    def __compose__(self, other):
 
         flow = self.flow.compose(other.flow)
 

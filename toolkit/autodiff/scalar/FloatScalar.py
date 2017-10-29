@@ -9,30 +9,20 @@ class FloatScalar(CalcFlow):
 
         super().__init__(value)
 
+    def _calc_unary(self, func):
+
+        calc_val = FloatScalar(func.calculate())
+
+        super(FloatScalar, self).__calc_unary__(calc_val, func)
+
+        return calc_val
+
     def _calc_binary(self, other, func):
 
         calc_val = FloatScalar(func.calculate())
 
-        self._add_edge_to_both(other, func)
+        super(FloatScalar, self).__calc_binary__(calc_val, other, func)
 
-        calc_val.flow = self._compose(other)
-
-        calc_val.last_node = func
-
-        func.result = calc_val
-
-        func.flow = calc_val.flow
-
-        return calc_val
-
-    def _calc_unary(self, func):
-
-        calc_val = FloatScalar(func.calculate())
-        self._add_edge_to_self(func)
-        calc_val.last_node = func
-        calc_val.flow = self.flow
-        func.result = calc_val
-        func.flow = calc_val.flow
         return calc_val
 
     @classmethod
