@@ -4,8 +4,6 @@ from toolkit.autodiff.scalar.FloatScalar import FloatScalar
 from toolkit.autodiff.tensor.FloatTensor import FloatTensor
 
 
-
-
 def test_func(x1, x2):
 
     return (x1.ln() + (x1 * x2)) - x2.sin()

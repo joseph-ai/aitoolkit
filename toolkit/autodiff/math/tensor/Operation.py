@@ -22,7 +22,7 @@ class SinOp(MathOp):
 
     def __str__(self):
 
-        return "sin(%s) = %s" % (self.input_x, self.result)
+        return "[%s] sin(%s) = %s" % (self.__id__, self.input_x, self.result)
 
 
 class ExpOp(MathOp):
@@ -44,7 +44,7 @@ class ExpOp(MathOp):
 
     def __str__(self):
 
-        return "e ** (%s) = %s" % (self.input_x, self.result)
+        return "[%s] e ** (%s) = %s" % (self.__id__, self.input_x, self.result)
 
 
 class LnOp(MathOp):
@@ -66,4 +66,4 @@ class LnOp(MathOp):
 
     def __str__(self):
 
-        return "ln(%s) = %s" % (self.input_x, self.result)
+        return "[%s] ln(%s) = %s" % (self.__id__, self.input_x, self.result)

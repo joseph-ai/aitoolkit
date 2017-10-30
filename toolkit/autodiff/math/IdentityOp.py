@@ -16,4 +16,4 @@ class IdentityOp(MathOp):
 
     def __str__(self):
 
-        return "Id(%s) = %s" % (self.input_x, self.result)
+        return "[%s] Id(%s) = %s" % (self.__id__, self.input_x, self.result)

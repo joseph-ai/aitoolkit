@@ -109,5 +109,5 @@ class FloatScalar(CalcFlow):
 
     def __str__(self):
 
-        return "%s" % self.value
+        return "[%s] %s" % (self.__id__, self.value)
 

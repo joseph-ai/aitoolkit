@@ -109,4 +109,6 @@ class FloatTensor(CalcFlow):
 
     def __str__(self):
 
-        return "%s" % self.value
+        return "[%s] %s" % (self.__id__, self.value)
+        #return "[%s] Shape:%s, Dtype:%s" % (self.__id__, self.value.shape, self.value.dtype)
+

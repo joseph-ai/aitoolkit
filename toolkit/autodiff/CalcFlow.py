@@ -5,6 +5,8 @@ from .flow import FlowCreator
 
 class CalcFlow(object):
 
+    __id__ = 0
+
     def __init__(self, value):
 
         self.value = value
@@ -15,8 +17,17 @@ class CalcFlow(object):
 
         self.last_node = None
 
+        self.__id__ = 0
+
+        self.__increment_id__()
+
         self.flow = FlowCreator.default_creator()
         self.flow.init()
+
+    def __increment_id__(self):
+
+        CalcFlow.__id__ = CalcFlow.__id__ + 1
+        self.__id__ = CalcFlow.__id__
 
     def __calc_unary__(self, calc_val, func):
 
