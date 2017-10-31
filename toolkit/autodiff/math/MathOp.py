@@ -44,7 +44,7 @@ class MultiplyOp(MathOp):
 
     def __str__(self):
 
-        return "[%s] %s * %s = %s" % (self.__id__, self.input_x, self.input_y, self.result)
+        return "%s * %s = %s" % (self.input_x, self.input_y, self.result)
 
 
 class AdditionOp(MathOp):
@@ -68,7 +68,7 @@ class AdditionOp(MathOp):
 
     def __str__(self):
 
-        return "[%s] %s + %s = %s" % (self.__id__, self.input_x, self.input_y, self.result)
+        return "%s + %s = %s" % ( self.input_x, self.input_y, self.result)
 
 
 class DivideOp(MathOp):
@@ -94,7 +94,7 @@ class DivideOp(MathOp):
 
     def __str__(self):
 
-        return "[%s] %s / %s = %s" % (self.__id__, self.input_x, self.input_y, self.result)
+        return "%s / %s = %s" % (self.input_x, self.input_y, self.result)
 
 
 class SubtractionOp(MathOp):
@@ -120,7 +120,7 @@ class SubtractionOp(MathOp):
 
     def __str__(self):
 
-        return "[%s] %s - %s = %s" % (self.__id__, self.input_x, self.input_y, self.result)
+        return "%s - %s = %s" % ( self.input_x, self.input_y, self.result)
 
 
 class ExponentOp(MathOp):
@@ -147,4 +147,4 @@ class ExponentOp(MathOp):
 
     def __str__(self):
 
-        return "[%s] %s ^ %s = %s" % (self.__id__, self.input_x, self.input_y, self.result)
+        return "%s ^ %s = %s" % (self.input_x, self.input_y, self.result)

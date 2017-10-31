@@ -29,6 +29,17 @@ class CalcFlow(object):
         CalcFlow.__id__ = CalcFlow.__id__ + 1
         self.__id__ = CalcFlow.__id__
 
+    def __reset__(self):
+
+        self.__id__ = 0
+
+    def reset(self):
+        self.__reset__()
+
+    @classmethod
+    def full_reset(cls):
+        CalcFlow.__id__ = 0
+
     def __calc_unary__(self, calc_val, func):
 
         self._add_edge_to_self(func)
