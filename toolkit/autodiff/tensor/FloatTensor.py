@@ -45,7 +45,7 @@ class FloatTensor(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = m.MultiplyOp(self, other)
+        math_func = am.MultiplyOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -54,7 +54,7 @@ class FloatTensor(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = m.AdditionOp(self, other)
+        math_func = am.AdditionOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -63,7 +63,7 @@ class FloatTensor(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = m.SubtractionOp(self, other)
+        math_func = am.SubtractionOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -72,7 +72,7 @@ class FloatTensor(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = m.ExponentOp(self, other)
+        math_func = am.ExponentOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -81,7 +81,7 @@ class FloatTensor(CalcFlow):
         if not CalcFlow.is_calc_flow(other):
             raise ValueError("Not CalcFlow")
 
-        math_func = m.DivideOp(self, other)
+        math_func = am.DivideOp(self, other)
 
         return self._calc_binary(other, math_func)
 
@@ -110,5 +110,4 @@ class FloatTensor(CalcFlow):
     def __str__(self):
 
         return "[%s] %s" % (self.__id__, self.value)
-        #return "[%s] Shape:%s, Dtype:%s" % (self.__id__, self.value.shape, self.value.dtype)
 
