@@ -1,17 +1,14 @@
 
-from ..flow import FlowCreator
+from ..autodiff.math import MathOp
 
 
-class Module(object):
+class Module(MathOp):
     """
     Base class to all nn modules
     """
 
     def __init__(self):
-
-        # this is my network
-        self.flow = FlowCreator.default_creator()
-        self.flow.init()
+        super().__init__()
 
     def forward(self, *args, **kwargs):
         """This should be over on all subclasses

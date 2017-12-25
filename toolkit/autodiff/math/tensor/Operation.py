@@ -68,3 +68,24 @@ class LnOp(MathOp):
 
         return "ln(%s) = %s" % (self.input_x, self.result)
 
+
+class DotProduct(MathOp):
+
+    def __init__(self, m1, m2):
+
+        self.input_m1 = m1
+        self.input_m2 = m2
+        super().__init__()
+
+    def calculate(self):
+
+        self.result = np.dot(self.input_m1, self.input_m2)
+        return self.result
+
+    def backward(self, edge_value):
+        pass
+
+    def __str__(self):
+
+        return "np.dot(%s,%s) = %s" % (self.input_m1.shape, self.input_m2.shape, self.result.shape)
+

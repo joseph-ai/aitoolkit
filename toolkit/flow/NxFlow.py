@@ -19,7 +19,7 @@ class NxFlow(object):
 
     def topological_sort(self):
 
-        return nx.topological_sort(self.network, reverse=True)
+        return list(nx.topological_sort(self.network))[::-1]
 
     def leaves(self):
 

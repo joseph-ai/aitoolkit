@@ -41,7 +41,7 @@ class AdditionOp(MathOp):
 
     def __str__(self):
 
-        return "%s + %s = %s" % ( self.input_x, self.input_y, self.result)
+        return "%s + %s = %s" % (self.input_x, self.input_y, self.result)
 
 
 class SubtractionOp(MathOp):
